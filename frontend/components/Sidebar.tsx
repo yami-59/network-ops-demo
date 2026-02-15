@@ -56,8 +56,7 @@ export default function Sidebar() {
       </VStack>
       <Box mt={6} p={3} borderRadius="xl" bg="blue.50" border="1px solid" borderColor="blue.100">
         <Text fontSize="xs" color="blue.700" fontWeight="700">Demo</Text>
-        <Text fontSize="xs" color="blue.700" mt={1}>Démo interne – gestion simple des demandes réseau,
-sans authentification pour l’instant.</Text>
+        <Text fontSize="xs" color="blue.700" mt={1}>Démo interne – Gestion simple et suivi des opérations réseau 5G.</Text>
       </Box>
     </Box>
   );
