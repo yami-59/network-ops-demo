@@ -29,18 +29,20 @@ import { fetcher, postJson } from "@/lib/api";
 import type { Department, RequestDetail, StatusCode } from "@/lib/types";
 import { statusColorScheme, statusLabel } from "@/lib/labels";
 
-const DEPARTMENTS: Department[] = ["ENGINEERING", "PILOTAGE", "OPERATIONS"];
+
+const DEPARTMENTS: Department[] = ["Engineering", "Pilotage", "Operations"];
 
 const STATUSES: StatusCode[] = ["PENDING", "PLANNED", "EXECUTED", "FAILED"];
 
 
 const CREATOR = { name: "Yamin", email: "yamin@demo.com" };
 
-function actorByDepartment(dep: "ENGINEERING" | "PILOTAGE" | "OPERATIONS") {
-  if (dep === "PILOTAGE") return "Jean";
-  if (dep === "OPERATIONS") return "Léo";
-  return "Yamin";
+function actorByDepartment(dep: Department) {
+  if (dep === "Pilotage") return "Jean";
+  if (dep === "Operations") return "Léo";
+  return "Yamin"; // Engineering
 }
+
 
 function Field({ label, value }: { label: string; value: React.ReactNode }) {
   return (
@@ -79,7 +81,7 @@ export default function EditRequestModal({
     fetcher
   );
 
-  const [department, setDepartment] = React.useState<Department>("PILOTAGE");
+  const [department, setDepartment] = React.useState<Department>("Pilotage");
   const [toStatus, setToStatus] = React.useState<StatusCode>("PLANNED");
   const [comment, setComment] = React.useState("");
 
@@ -104,7 +106,7 @@ export default function EditRequestModal({
 
     try {
       await postJson(`/api/requests/${opId}/status`, {
-        department,
+        department: department.toUpperCase() as any,
         to_status: toStatus,
         comment: comment.trim(),
         actor_name: actorName,
@@ -190,14 +192,11 @@ export default function EditRequestModal({
                     onChange={(e) => setDepartment(e.target.value as any)}
                   >
                     {DEPARTMENTS.map((d) => (
-                      <option key={d} value={d}>
-                        {d === "ENGINEERING"
-                          ? "Engineering"
-                          : d === "PILOTAGE"
-                          ? "Pilotage"
-                          : "Operations"}
-                      </option>
-                    ))}
+                        <option key={d} value={d}>
+                          {d}
+                        </option>
+                      ))}
+
                   </Select>
                 </FormControl>
 
